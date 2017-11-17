@@ -49,13 +49,20 @@ public class ParamIndividual implements Comparable<ParamIndividual> {
     this.fitness = fitness;
   }
 
+
   /**
    * Implement Comparator. Individuals with a higher fitness will be ordered higher.
    */
 
   @Override
   public int compareTo(ParamIndividual other) {
-    return Double.compare(other.fitness,this.fitness);
+    return Double.compare(other.fitness, this.fitness);
   }
 
+  @Override
+  public String toString() {
+    return String.valueOf(this.getW())+"," + String.valueOf(this.getW_n())+","
+        + String.valueOf(this.getSigma_r());
+
+  }
 }

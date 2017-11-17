@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.TreeSet;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import com.parma.genetics.fitness.FitnessEval;
 import com.parma.genetics.settings.Fitness;
 import com.parma.genetics.settings.GaSettings;
@@ -18,6 +19,8 @@ public class GaCalibration {
 
   private GaSettings settings;
 
+  private Hashtable<String, Double> params;
+
   private final Random random = new Random();
 
   public GaCalibration(GaSettings settings) {
@@ -28,10 +31,12 @@ public class GaCalibration {
     this.safebox = new TreeSet<ParamIndividual>();
 
     this.settings.setSelectionThreshold(0.6);
+    this.params = new Hashtable<String, Double>();
   }
 
 
   public void runCalibration() {
+
 
     ParamIndividual bestIndividual = new ParamIndividual();
     CrossoverOperator crossover = new CrossoverOperator(settings.getCrossoverType());
@@ -118,12 +123,20 @@ public class GaCalibration {
       FitnessEval fitEval =
           new FitnessEval(settings.getFitnessFunction(), settings.getSegmentationTechnique());
 
+      String key = p.toString();
+      Double value = params.get(key);
       double score = 0;
-      if (settings.getFitnessFunction() == Fitness.DICE) {
-        for (int index = 0; index < settings.getSampleCount(); index++) {
-          score += fitEval.evaluate(p, settings.getOriginalImage(index),
-              settings.getGroundtruthImage(index));
+      long time = System.currentTimeMillis();
+      if (value != null) {
+        score = value.doubleValue();
+      } else {
+        if (settings.getFitnessFunction() == Fitness.DICE) {
+          for (int index = 0; index < settings.getSampleCount(); index++) {
+            score = fitEval.evaluate(p, settings.getOriginalImage(index),
+                settings.getGroundtruthImage(index));
+          }
         }
+        params.put(key, score);
       }
 
       // calculate the mean score
