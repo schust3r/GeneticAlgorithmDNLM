@@ -13,17 +13,17 @@ public class DnlmFilterTest {
 
     ImageHandler ih = new ImageHandler();
 
-    String filename = "coins.jpg";
+    String filename = "001.jpg";
 
-    Mat imagen = ih.leerImagenGrises("test_files/input/" + filename);
+    Mat imagen = ih.leerImagenGrises("images/" + filename);
     DnlmFilter filter = new DnlmFilter();
     double mils = System.currentTimeMillis();
 
     Mat res = null;
-    res = filter.filter(imagen, 3, 3, 5);
+    res = filter.filter(imagen, 11, 3, 69);
 
     System.out.println("Time of processing: " + (System.currentTimeMillis() - mils));
-    ih.guardarImagen("test_files/output/", filename + "_out", "jpg", res);
+    ih.guardarImagen("images/", filename + "_out", "jpg", res);
     
     double checksum = Core.sumElems(res).val[0];
     System.out.printf("Checksum: %f\n", checksum);

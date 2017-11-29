@@ -14,6 +14,7 @@ public class ImageHandler {
    * @param ruta ubicación de la imagen en disco
    * @return imagen matriz de OpenCV en RGB (a 3 canales)
    */
+  
   public Mat leerImagenColor(String ruta) {
     try {
       System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

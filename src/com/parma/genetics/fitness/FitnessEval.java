@@ -5,6 +5,7 @@ import com.parma.filter.DnlmFilter;
 import com.parma.genetics.ParamIndividual;
 import com.parma.genetics.settings.Fitness;
 import com.parma.genetics.settings.Segmentation;
+import com.parma.images.ImageHandler;
 import com.parma.segmentation.Dice;
 import com.parma.segmentation.Otsu;
 import com.parma.segmentation.Thresholding;
@@ -27,7 +28,8 @@ public class FitnessEval {
 
     w = (w % 2 == 0) ? w++ : w;
     w_n = (w % 2 == 0) ? w_n++ : w_n;
-
+    
+    int snipping  = w+w_n;
     Mat original = new Mat();
     pOriginal.copyTo(original);
 
@@ -36,16 +38,19 @@ public class FitnessEval {
 
     // filter the image with DNLM-IDFT
     Mat filteredImage = DnlmFilter.filter(original, w, w_n, sigma_r);
-    
+    ImageHandler ih = new ImageHandler();
     // segmentation of the filtered image
     filteredImage = applySegmentation(filteredImage);
 
+    Mat image1 = filteredImage.submat(snipping, filteredImage.rows()- snipping -1, snipping,  filteredImage.cols()-snipping -1 );
+    Mat image2 = pGroundtruth.submat(snipping, pGroundtruth.rows()- snipping -1, snipping,  pGroundtruth.cols()- snipping -1 );
     // calculate fitness with the specified similarity check function
-    double fitness = getFitnessResult(filteredImage, pGroundtruth);
+     double fitness = getFitnessResult(image1, image2);
     
     original.release();
     filteredImage.release();
-
+    image1.release();
+    image2.release();
     return fitness;
   }
 

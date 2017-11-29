@@ -8,9 +8,12 @@ import java.util.Hashtable;
 import com.parma.genetics.fitness.FitnessEval;
 import com.parma.genetics.settings.Fitness;
 import com.parma.genetics.settings.GaSettings;
+import com.parma.logging.GaLogger;
 
 public class GaCalibration {
 
+  private GaLogger logger;
+  
   private Population population;
 
   private int safeboxSize;
@@ -32,6 +35,7 @@ public class GaCalibration {
 
     this.settings.setSelectionThreshold(0.6);
     this.params = new Hashtable<String, Double>();
+    this.logger = new GaLogger("log");
   }
 
 
@@ -50,19 +54,16 @@ public class GaCalibration {
       population.sortByFitness();
 
       bestIndividual = population.getIndividual(0);
+
+      logger.log(gen, getAverageFitness(), bestIndividual.getFitness(), bestIndividual.getW(), bestIndividual.getW_n(), bestIndividual.getSigma_r()); 
+      
       safebox.add(bestIndividual);
 
       if (safebox.size() > this.safeboxSize) {
         safebox.remove(safebox.last());
       }
 
-      // ParamIndividual worstIndividual = population.getIndividual(population.getSize() - 1);
 
-      /*
-       * Generate and save the fitness report for each generation
-       */
-
-      /* selection step */
       normalizePopulationFitness();
 
       List<ParamIndividual> selectionIndividuals = getSelectionIndividuals();
@@ -73,23 +74,8 @@ public class GaCalibration {
       population.update(offspring);
 
       applyMutation();
+      System.gc();
     }
-
-    /*
-     * Update calibration with final status and parameters
-     */
-
-    /*
-     * CalibrationDal.updateStatus(settings.getTitle(), bestIndividual.getFitness(),
-     * settings.getMaxGenerations(), "DONE", settings.getOwner());
-     */
-
-
-    /*
-     * FitnessReport fitnessReport = new FitnessReport(getAverageFitness(),
-     * bestIndividual.getFitness(), settings.getMaxGenerations(), settings.getTitle(),
-     * settings.getOwner()); ReportDal.saveFitnessReport(fitnessReport);
-     */
 
     bestIndividual = safebox.first();
   }
@@ -141,6 +127,7 @@ public class GaCalibration {
 
       // calculate the mean score
       score = score / (double) settings.getSampleCount();
+      System.out.println("Key: "+ key +" | Score: "+score+";");
       population.getIndividual(ind).setFitness(score);
     }
   }

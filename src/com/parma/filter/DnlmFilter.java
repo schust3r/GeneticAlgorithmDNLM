@@ -200,7 +200,7 @@ public class DnlmFilter {
       Core.add(R, mat, R);
     
     // release unreferenced matrices
-    System.gc();
+   
     
     return R;
 
