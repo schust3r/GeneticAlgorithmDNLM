@@ -6,14 +6,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import com.parma.genetics.fitness.FitnessEval;
-import com.parma.genetics.settings.Fitness;
 import com.parma.genetics.settings.GaSettings;
-import com.parma.logging.GaLogger;
 
 public class GaCalibration {
 
-  private GaLogger logger;
-  
   private Population population;
 
   private int safeboxSize;
@@ -28,19 +24,17 @@ public class GaCalibration {
 
   public GaCalibration(GaSettings settings) {
     this.settings = settings;
-    population = new Population(settings);
+    this.population = new Population(settings);
     this.population.initializePopulation(settings.getMaxIndividuals());
     this.safeboxSize = Math.max(1, (int) ((double) settings.getMaxIndividuals() * 0.2));
     this.safebox = new TreeSet<ParamIndividual>();
-
     this.settings.setSelectionThreshold(0.6);
     this.params = new Hashtable<String, Double>();
-    this.logger = new GaLogger("log");
+    header();
   }
 
 
   public void runCalibration() {
-
 
     ParamIndividual bestIndividual = new ParamIndividual();
     CrossoverOperator crossover = new CrossoverOperator(settings.getCrossoverType());
@@ -55,26 +49,25 @@ public class GaCalibration {
 
       bestIndividual = population.getIndividual(0);
 
-      logger.log(gen, getAverageFitness(), bestIndividual.getFitness(), bestIndividual.getW(), bestIndividual.getW_n(), bestIndividual.getSigma_r()); 
-      
+      log(gen, getAverageFitness(), bestIndividual.getFitness(), bestIndividual.getW(),
+          bestIndividual.getW_n(), bestIndividual.getSigma_r());
+
       safebox.add(bestIndividual);
 
       if (safebox.size() > this.safeboxSize) {
         safebox.remove(safebox.last());
       }
 
-
       normalizePopulationFitness();
 
       List<ParamIndividual> selectionIndividuals = getSelectionIndividuals();
-      System.out.println("Number of parents: " + selectionIndividuals.size());
+
       List<ParamIndividual> offspring =
           crossover.cross(selectionIndividuals, (int) (settings.getMaxIndividuals() / 2));
 
       population.update(offspring);
 
       applyMutation();
-      System.gc();
     }
 
     bestIndividual = safebox.first();
@@ -112,25 +105,32 @@ public class GaCalibration {
       String key = p.toString();
       Double value = params.get(key);
       double score = 0;
-      long time = System.currentTimeMillis();
+
       if (value != null) {
+        // if the value is in the table, don't calculate it again
         score = value.doubleValue();
+
       } else {
-        if (settings.getFitnessFunction() == Fitness.DICE) {
-          for (int index = 0; index < settings.getSampleCount(); index++) {
-            score = fitEval.evaluate(p, settings.getOriginalImage(index),
-                settings.getGroundtruthImage(index));
-          }
+        // calculate fitness score for every (image, ground_truth) pair provided
+        for (int index = 0; index < settings.getSampleCount(); index++) {
+          score += fitEval.evaluate(p, settings.getOriginalImage(index),
+              settings.getGroundtruthImage(index));
         }
+        // calculate the mean score for the samples
+        score = score / (double) settings.getSampleCount();
+
+        // save it to the params set
         params.put(key, score);
       }
 
-      // calculate the mean score
-      score = score / (double) settings.getSampleCount();
-      System.out.println("Key: "+ key +" | Score: "+score+";");
+      // LOG this individual's score
+      System.out
+          .println("Key: " + String.format("%1$-" + 7 + "s", key) + " | Score: " + score + ";");
+
       population.getIndividual(ind).setFitness(score);
     }
   }
+
 
   private void normalizePopulationFitness() {
     double accumulatedFitness = getAccumulatedFitness();
@@ -141,18 +141,18 @@ public class GaCalibration {
     }
   }
 
-  private List<ParamIndividual> getSelectionIndividuals() {
 
+  private List<ParamIndividual> getSelectionIndividuals() {
     double individualAccumulatedFitness = 1;
     List<ParamIndividual> selectedIndividuals = new ArrayList<ParamIndividual>();
     double threshold = settings.getSelectionThreshold();
 
-    int index = 0;
-    while (individualAccumulatedFitness >= threshold && index < population.getSize()) {
+    for (int index = 0; individualAccumulatedFitness >= threshold
+        && index < population.getSize(); index++) {
+
       ParamIndividual p = population.getIndividual(index);
       selectedIndividuals.add(p);
       individualAccumulatedFitness -= p.getFitness();
-      index++;
     }
 
     return selectedIndividuals;
@@ -179,6 +179,16 @@ public class GaCalibration {
       accumulatedFitness += p.getFitness();
     }
     return accumulatedFitness;
+  }
+
+  // simple console reports
+
+  public void header() {
+    System.out.println("generation,average_fitness,best_fitness,best_w,best_w_n,best_s_r");
+  }
+
+  public void log(int gen, double avgf, double bestf, int bestw, int bestwn, int bestsr) {
+    System.out.println(gen + "," + avgf + "," + bestf + "," + bestw + "," + bestwn + "," + bestsr);
   }
 
 }

@@ -23,10 +23,6 @@ public class GaSettings {
     private int lowerWn;
     private int upperWn;    
     
-    /** Genetic Algorithm configuration **/
-    
-    private String owner;
-
     private String title;
     
     private String description;

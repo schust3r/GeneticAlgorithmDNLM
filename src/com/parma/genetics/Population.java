@@ -67,18 +67,9 @@ public class Population {
     return random.nextInt(upper - lower + 1) + lower;
   }
 
-  private float getRandomFloatBetween(float lower, float upper) {
-    return random.nextFloat() * (upper - lower) + lower;
-  }
-
   public void update(List<ParamIndividual> offspring) {
-	System.out.println("------");
-	System.out.println("Size of list before: "+getSize());
 	population.subList(getSize()- offspring.size(), getSize()).clear();
-	System.out.println("Size of list after shrinking: "+getSize());
 	population.addAll(offspring);
-	System.out.println("Size of list after: "+getSize());
-	System.out.println("------");
   }
 
 }
