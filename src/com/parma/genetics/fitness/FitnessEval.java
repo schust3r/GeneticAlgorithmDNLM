@@ -57,8 +57,7 @@ public class FitnessEval {
 
     if (segTechnique == Segmentation.OTSU) {
       // apply the binary segmentation using OpenCV's Otsu
-      Thresholder thresholding = new Thresholder();
-      thresholding.applyOtsuThreshold(image);
+      Thresholder.applyOtsuThreshold(image);
       return image;
     }
 
@@ -73,7 +72,7 @@ public class FitnessEval {
   private double getFitnessResult(Mat image, Mat groundtruth) {
     switch (fitnessFunction) {
       case DICE:
-        return Dice.calcularDice(image, groundtruth);
+        return Dice.calculateDice(image, groundtruth);
       /*
        * More methods to be added ...
        */

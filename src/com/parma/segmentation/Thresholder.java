@@ -15,7 +15,7 @@ public class Thresholder {
    * 
    * @param image
    */
-  public void applyOtsuThreshold(Mat image) {  
+  public static void applyOtsuThreshold(Mat image) {  
     image.convertTo(image, CvType.CV_8UC1);
     Imgproc.threshold(image, image, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU);
   }
@@ -26,7 +26,7 @@ public class Thresholder {
    * @param image matriz OpenCV de la image
    * @param t valor de umbral para definir blancos y negros
    */
-  public void applyThreshold(Mat image, int t) {
+  public static void applyThreshold(Mat image, int t) {
     Imgproc.threshold(image, image, t, 255, Imgproc.THRESH_BINARY);
   }
 
@@ -36,7 +36,7 @@ public class Thresholder {
    * @param image matriz OpenCV de la image
    * @param t valor de umbral para definir blancos y negros
    */
-  public void applyInverseThreshold(Mat image, int t) {
+  public static void applyInverseThreshold(Mat image, int t) {
     Imgproc.threshold(image, image, t, 255, Imgproc.THRESH_BINARY_INV);
   }
 

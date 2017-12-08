@@ -3,6 +3,7 @@ package com.parma.genetics.settings;
 import java.util.ArrayList;
 import java.util.List;
 import org.opencv.core.Mat;
+import com.parma.segmentation.Thresholder;
 
 /**
  * 
@@ -79,6 +80,7 @@ public class GaSettings {
     }
     
     public void addToGroundtruthImages(Mat imagen) {
+      Thresholder.applyThreshold(imagen, 1);
       groundtruthImages.add(imagen);
     }   
     

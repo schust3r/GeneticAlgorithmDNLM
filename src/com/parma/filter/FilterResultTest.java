@@ -31,12 +31,11 @@ public class FilterResultTest {
         groundtruth.cols() - snip - 2);
 
     // apply binarization + Otsu thresholding
-    Thresholder th = new Thresholder();
-    th.applyOtsuThreshold(res);
-    th.applyThreshold(groundtruth, 1);        
+    Thresholder.applyOtsuThreshold(res);
+    Thresholder.applyThreshold(groundtruth, 1);  
 
     // calculate dice similarity index
-    double dice = Dice.calcularDice(res, groundtruth);
+    double dice = Dice.calculateDice2(res, groundtruth);
 
     ih.guardarImagen("images/", filename + "_out", "png", res);
     
