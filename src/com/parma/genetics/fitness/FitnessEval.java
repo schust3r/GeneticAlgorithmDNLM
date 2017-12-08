@@ -35,10 +35,10 @@ public class FitnessEval {
 
     // cut black borders and apply same transformation to groundtruth
     int snipping = w + w_n;
-    filteredImage = filteredImage.submat(snipping, filteredImage.rows() - snipping - 1, snipping,
-        filteredImage.cols() - snipping - 1);
-    pGroundtruth = pGroundtruth.submat(snipping, pGroundtruth.rows() - snipping - 1, snipping,
-        pGroundtruth.cols() - snipping - 1);
+    filteredImage = filteredImage.submat(snipping, filteredImage.rows() - snipping - 2, snipping,
+        filteredImage.cols() - snipping - 2);
+    pGroundtruth = pGroundtruth.submat(snipping, pGroundtruth.rows() - snipping - 2, snipping,
+        pGroundtruth.cols() - snipping - 2);
 
     // segmentation of the filtered image
     filteredImage = applySegmentation(filteredImage);
