@@ -14,15 +14,16 @@ public class FilterResultTest {
     ImageHandler ih = new ImageHandler();
 
     String filename = "002";
-    int w = 3;
+    int w = 5;
     int w_n = 5;
-    int sigma_r = 300;
+    int sigma_r = 310;
 
     Mat imagen = ih.leerImagenGrises("images/" + filename + ".png");
     Mat groundtruth = ih.leerImagenGrises("images/" + filename + "_gt.png");
 
     // apply filter
-    Mat res = DnlmFilter.filter(imagen, w, w_n, sigma_r);
+    DnlmFilter filter = new DnlmFilter();
+    Mat res = filter.filter(imagen, w, w_n, sigma_r);
 
     // cut unwanted borders
     int snip = w + w_n;
@@ -35,7 +36,7 @@ public class FilterResultTest {
     Thresholder.applyThreshold(groundtruth, 1);  
 
     // calculate dice similarity index
-    double dice = Dice.calculateDice2(res, groundtruth);
+    double dice = Dice.calculateDice(res, groundtruth);
 
     ih.guardarImagen("images/", filename + "_out", "png", res);
     

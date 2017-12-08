@@ -14,11 +14,12 @@ import com.parma.images.ImageHandler;
 public class Dice {
 
   /**
-   * Sobrecarga de metodo para calcular el indice de similitud de Dice entre dos imagenes Mat.
+   * Metodo para calcular el indice de similitud de Dice entre dos imagenes Mat.
+   * Segun formula original: wikipedia.org/wiki/Coeficiente_de_Sorensen-Dice
    * 
    * @param umbralized Mat con imagen umbralizada
    * @param groundtruth Mat con imagen groundtruth
-   * @return resultado de Dice
+   * @return resultado de indice Sorensen-Dice
    */
   public static double calculateDice(Mat umbralized, Mat groundtruth) {
 
@@ -28,10 +29,11 @@ public class Dice {
     int cardinalityA = umbralized.rows() * umbralized.cols();
     int cardinalityB = groundtruth.rows() * groundtruth.cols();
 
-    // DEBUG ONLY
+    //* DEBUG ONLY
     ImageHandler ih = new ImageHandler();
     ih.guardarImagen("images", "umb_temp", "png", umbralized);
     ih.guardarImagen("images", "grn_temp", "png", groundtruth);
+    // */
 
     Size sizeGroundTruth = groundtruth.size();
     int sizeX = (int) sizeGroundTruth.width;
@@ -50,6 +52,13 @@ public class Dice {
   }
 
 
+  /**
+   * Implementación alternativa de Dice.
+   * 
+   * @param umbralized
+   * @param groundtruth
+   * @return
+   */
   public static double calculateDice2(Mat umbralized, Mat groundtruth) {
 
     System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

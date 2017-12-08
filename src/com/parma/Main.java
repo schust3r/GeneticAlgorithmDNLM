@@ -16,7 +16,7 @@ public class Main {
     try {
       GaSettings settings = new GaSettings();
 
-      settings.setCrossoverType(Crossover.CLUSTER);
+      settings.setCrossoverType(Crossover.SIMPLE);
       settings.setFitnessFunction(Fitness.DICE);
       settings.setLowerW(1);
       settings.setUpperW(9);

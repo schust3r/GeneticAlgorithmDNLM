@@ -13,7 +13,7 @@ import org.opencv.imgproc.Imgproc;
 
 public class DnlmFilter {
 
-  public static Mat filter(Mat I, double w, double w_n, double sigma_r) {
+  public Mat filter(Mat I, double w, double w_n, double sigma_r) {
 
     Mat G = new Mat(I.size(), CvType.CV_64FC1);
     I.copyTo(G);
@@ -157,30 +157,27 @@ public class DnlmFilter {
                     
           R.put(i - 1, j - 1, Core.sumElems(OxU_sub).val[0] / norm_factor);
           
+          I_t.release();
+          O.release();
+          neighbor_p.release();
           padded.release();
           complexI_a.release();
           complexI_b.release();
-          O.release();
-          OxU_sub.release();
           C.release();
           correlation.release();
-          neighbor_p.release();
-          I_t.release();
-          
+          OxU_sub.release();
+         
         }
       }
     });
     
-    I.release();
     G.release();
     II2.release();
     X.release();
     Y.release();
+    S.release();
     GaussW.release();
-    U.release(); 
-
-    System.gc();
-    System.runFinalization();
+    U.release();
     
     return R;
 
@@ -189,7 +186,7 @@ public class DnlmFilter {
   /**
    * No adaptative laplacian. CURRENT VERSION HAS HARDCODED KERNEL
    */
-  private static Mat NoAdaptativeUSM(Mat SrcImage, double lambda, int kernelSize,
+  private Mat NoAdaptativeUSM(Mat SrcImage, double lambda, int kernelSize,
       double kernelSigma) {
     Mat kernel = new Mat(kernelSize, kernelSize, CvType.CV_64FC1);
     for (int i = 0; i < kernelSize; i++) {
@@ -229,7 +226,7 @@ public class DnlmFilter {
   /**
    * Meshgrid generator
    */
-  private static void meshgrid(Range xgv, Range ygv, Mat X, Mat Y) {
+  private void meshgrid(Range xgv, Range ygv, Mat X, Mat Y) {
     double[] t_x = new double[xgv.size() + 1];
     double[] t_y = new double[ygv.size() + 1];
     for (int i = xgv.start; i <= xgv.end; i++) {

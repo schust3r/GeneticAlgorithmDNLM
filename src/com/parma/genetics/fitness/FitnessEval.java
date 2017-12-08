@@ -31,7 +31,8 @@ public class FitnessEval {
     pOriginal.copyTo(original);
 
     // filter the image with DNLM-IDFT
-    Mat filteredImage = DnlmFilter.filter(original, w, w_n, sigma_r);
+    DnlmFilter filter = new DnlmFilter();
+    Mat filteredImage = filter.filter(original, w, w_n, sigma_r);
 
     // cut black borders and apply same transformation to groundtruth
     int snipping = w + w_n;
