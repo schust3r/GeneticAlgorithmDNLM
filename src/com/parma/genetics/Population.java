@@ -24,7 +24,9 @@ public class Population {
   }
 
   public void initializePopulation(int maxInd) {
+	  
     for (int i = 0; i < maxInd; i++) {
+	    
       ParamIndividual p = new ParamIndividual();
 
       p.setW(getRandomIntegerBetween(settings.getLowerW(), settings.getUpperW()));
@@ -35,8 +37,7 @@ public class Population {
 
       population.add(p);
     }
-    
-    sortByFitness();    
+	  
   }
   
   public void sortByFitness() {
