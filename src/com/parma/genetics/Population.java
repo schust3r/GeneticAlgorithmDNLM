@@ -39,10 +39,6 @@ public class Population {
     sortByFitness();    
   }
   
-  public void discardUnfit(double threshold) {
-    
-  }
-  
   public void sortByFitness() {
     Collections.sort(population);
   }
