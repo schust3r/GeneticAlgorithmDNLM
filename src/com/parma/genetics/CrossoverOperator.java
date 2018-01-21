@@ -57,7 +57,7 @@ public class CrossoverOperator {
 		}
 		
 		else {
-			for(int ind = 0; ind < parents.size();ind++) {
+			for(int ind = 0; ind <limit;ind++) {
 				
 				Collections.shuffle(parents);
 				ParamIndividual p = new ParamIndividual();
