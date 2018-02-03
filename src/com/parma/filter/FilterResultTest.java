@@ -13,18 +13,18 @@ public class FilterResultTest {
 
     ImageHandler ih = new ImageHandler();
 
-    String filename = "003";
+    String filename = "001";
     int w = 5;
     int w_n = 5;
     int sigma_r = 310;
 
-    Mat imagen = ih.leerImagenGrises("images/" + filename + ".png");
-    Mat groundtruth = ih.leerImagenGrises("images/" + filename + "_gt.png");
+    Mat imagen = ih.leerImagenGrises("images/Recortadas/" + filename + ".png");
+    Mat groundtruth = ih.leerImagenGrises("images/GT/" + filename + ".png");
 
     // apply filter
     DnlmFilter filter = new DnlmFilter();
    
-    Mat res = filter.filter(imagen, w, w_n, sigma_r, 3);
+    Mat res = filter.filter(imagen, w, w_n, sigma_r, 1.7);
 
     // cut unwanted borders
     int snip = w + w_n;
@@ -32,7 +32,7 @@ public class FilterResultTest {
     groundtruth = groundtruth.submat(snip, groundtruth.rows() - snip - 2, snip,
         groundtruth.cols() - snip - 2);
     
-    ih.guardarImagen("C:\\Users\\Eliot\\Documents\\GitHub\\GeneticAlgorithmDNLM\\images\\", filename + "_out_nootsu", "png", res);
+    //ih.guardarImagen("C:\\Users\\Eliot\\Documents\\GitHub\\GeneticAlgorithmDNLM\\images\\", filename + "_out_nootsu", "png", res);
 
     // apply binarization + Otsu thresholding
     Thresholder.applyOtsuThreshold(res);
@@ -42,7 +42,7 @@ public class FilterResultTest {
     // calculate dice similarity index
     double dice = Dice.calculateDice(res, groundtruth);
 
-    ih.guardarImagen("C:\\Users\\Eliot\\Documents\\GitHub\\GeneticAlgorithmDNLM\\images\\", filename + "_out", "png", res);
+   // ih.guardarImagen("C:\\Users\\Eliot\\Documents\\GitHub\\GeneticAlgorithmDNLM\\images\\", filename + "_out", "png", res);
     
     System.out.println(dice);
 

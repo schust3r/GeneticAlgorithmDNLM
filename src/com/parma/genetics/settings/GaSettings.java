@@ -27,6 +27,8 @@ public class GaSettings {
     private float lowerLambda;
     private float upperLambda;
     
+    private String location;
+    
     private String title;
     
     private String description;
@@ -229,5 +231,13 @@ public class GaSettings {
 
     public void setUpperLambda(float upperLambda) {
       this.upperLambda = upperLambda;
+    }
+
+    public String getLocation() {
+      return location;
+    }
+
+    public void setLocation(String location) {
+      this.location = location;
     }    
 }

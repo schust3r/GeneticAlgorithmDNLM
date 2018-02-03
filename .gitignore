@@ -3,3 +3,5 @@
 bin/com/parma/genetics/ParamIndividual.class
 *.class
 *.class
+*.png
+src/com/parma/genetics/ParamIndividualTest.java

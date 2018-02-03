@@ -50,7 +50,6 @@ public class ParamIndividual implements Comparable<ParamIndividual> {
     this.fitness = fitness;
   }
 
-
   /**
    * Implement Comparator. Individuals with a higher fitness will be ordered higher.
    */
@@ -68,7 +67,7 @@ public class ParamIndividual implements Comparable<ParamIndividual> {
   }
 
   public float getLambda() {
-    return lambda;
+    return (float) Math.round((lambda ) * 100) / 100;
   }
 
   public void setLambda(float lambda) {

@@ -29,12 +29,6 @@ public class Dice {
     int cardinalityA = umbralized.rows() * umbralized.cols();
     int cardinalityB = groundtruth.rows() * groundtruth.cols();
 
-    //* DEBUG ONLY
-    ImageHandler ih = new ImageHandler();
-    ih.guardarImagen("images", "umb_temp", "png", umbralized);
-    ih.guardarImagen("images", "grn_temp", "png", groundtruth);
-    // */
-
     Size sizeGroundTruth = groundtruth.size();
     int sizeX = (int) sizeGroundTruth.width;
     int sizeY = (int) sizeGroundTruth.height;
@@ -53,7 +47,7 @@ public class Dice {
 
 
   /**
-   * Implementación alternativa de Dice.
+   * Implementaciï¿½n alternativa de Dice.
    * 
    * @param umbralized
    * @param groundtruth

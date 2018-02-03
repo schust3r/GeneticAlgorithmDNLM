@@ -20,23 +20,27 @@ public class Main {
       settings.setFitnessFunction(Fitness.DICE);
       settings.setLowerW(3);
       settings.setUpperW(3);
-      settings.setLowerWn(3);
-      settings.setUpperWn(3);
+      settings.setLowerWn(1);
+      settings.setUpperWn(21);
       settings.setLowerSigmaR(1);
-      settings.setUpperSigmaR(20);
+      settings.setUpperSigmaR(500);
       settings.setLowerLambda(1);
-      settings.setUpperLambda(2);
-      settings.setMaxGenerations(5);
+      settings.setUpperLambda(30);
+      settings.setMaxGenerations(25);
       settings.setMaxIndividuals(10);
       settings.setMutationPerc((float) 0.05);
       settings.setMutationType(Mutation.RANDOM_BIT);
       settings.setSegmentationTechnique(Segmentation.OTSU);
       settings.setSelectionThreshold((float) 0.6);
 
+      String absdir = "";
+      if (!System.getProperty("os.name").toLowerCase().contains("windows")) {
+        absdir = "/home/scalderon/DnlmPortable/GeneticAlgorithmDNLM/";
+      }
+
+      settings.setLocation(absdir);
+
       ImageHandler imageHandler = new ImageHandler();
-
-      String absdir = ""; // "/home/scalderon/DnlmPortable/";
-
       Mat imagen1 = imageHandler.leerImagenGrises(absdir + "images/Recortadas/001.png");
       Mat imagengd1 = imageHandler.leerImagenGrises(absdir + "images/GT/001.png");
 

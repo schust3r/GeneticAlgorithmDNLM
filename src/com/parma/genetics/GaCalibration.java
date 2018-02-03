@@ -15,7 +15,7 @@ import com.parma.genetics.settings.GaSettings;
 
 public class GaCalibration {
 
-  private final String tablePath = "t.tmp";
+  private String tablePath;
 
   private Population population;
 
@@ -37,6 +37,7 @@ public class GaCalibration {
     this.safebox = new TreeSet<ParamIndividual>();
     this.settings.setSelectionThreshold((float) 0.6);
     this.params = loadStoredParams();
+    this.tablePath = settings.getLocation()+ "t.tmp";
     header();
   }
 
@@ -89,7 +90,7 @@ public class GaCalibration {
       bestIndividual = population.getIndividual(0);
 
       log(gen, getAverageFitness(), bestIndividual.getFitness(), bestIndividual.getW(),
-          bestIndividual.getW_n(), bestIndividual.getSigma_r());
+          bestIndividual.getW_n(), bestIndividual.getSigma_r(), bestIndividual.getLambda());
 
       safebox.add(bestIndividual);
 
@@ -113,8 +114,6 @@ public class GaCalibration {
     }
 
     bestIndividual = safebox.first();
-
-
 
   }
 
@@ -229,11 +228,11 @@ public class GaCalibration {
   // simple console reports
 
   public void header() {
-    System.out.println("generation,average_fitness,best_fitness,best_w,best_w_n,best_s_r");
+    System.out.println("generation,average_fitness,best_fitness,best_w,best_w_n,best_s_r,best_lambda");
   }
 
-  public void log(int gen, float avgf, float bestf, int bestw, int bestwn, int bestsr) {
-    System.out.println(gen + "," + avgf + "," + bestf + "," + bestw + "," + bestwn + "," + bestsr);
+  public void log(int gen, float avgf, float bestf, int bestw, int bestwn, int bestsr, float bestlambda) {
+    System.out.println(gen + "," + avgf + "," + bestf + "," + bestw + "," + bestwn + "," + bestsr + "," + bestlambda);
   }
 
 }
