@@ -3,12 +3,19 @@ package com.parma.genetics;
 import java.util.Random;
 import java.util.TreeSet;
 import java.util.List;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import com.parma.genetics.fitness.FitnessEval;
 import com.parma.genetics.settings.GaSettings;
 
 public class GaCalibration {
+
+  private final String tablePath = "t.tmp";
 
   private Population population;
 
@@ -29,12 +36,44 @@ public class GaCalibration {
     this.safeboxSize = Math.max(1, (int) ((float) settings.getMaxIndividuals() * 0.2));
     this.safebox = new TreeSet<ParamIndividual>();
     this.settings.setSelectionThreshold((float) 0.6);
-    this.params = new Hashtable<String, Float>();
+    this.params = loadStoredParams();
     header();
   }
 
+  private Hashtable<String, Float> loadStoredParams() {
+
+    try {
+      FileInputStream fis = new FileInputStream(tablePath);
+      ObjectInputStream ois = new ObjectInputStream(fis);
+      Object tableObject = ois.readObject();
+      if (tableObject instanceof java.util.Hashtable<?, ?>) {
+        Hashtable<String, Float> table = (Hashtable<String, Float>) tableObject;
+        return table;
+      } else {
+        return new Hashtable<String, Float>();
+      }
+
+    } catch (Exception e) {
+      return new Hashtable<String, Float>();
+    }
+  }
+
+  private void storeParams() {
+
+    try {
+      FileOutputStream fos = new FileOutputStream(tablePath);
+      ObjectOutputStream oos = new ObjectOutputStream(fos);
+      oos.writeObject(params);
+      oos.close();
+
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 
   public void runCalibration() {
+
 
     ParamIndividual bestIndividual = new ParamIndividual();
     CrossoverOperator crossover = new CrossoverOperator(settings.getCrossoverType());
@@ -68,9 +107,15 @@ public class GaCalibration {
       population.update(offspring);
 
       applyMutation();
+
+      storeParams();
+
     }
 
     bestIndividual = safebox.first();
+
+
+
   }
 
 
@@ -106,7 +151,7 @@ public class GaCalibration {
       Float value = params.get(key);
       float score = 0;
 
-      if ( value != null) {
+      if (value != null) {
         // if the value is in the table, don't calculate it again
         score = value;
 

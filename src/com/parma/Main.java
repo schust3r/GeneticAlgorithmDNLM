@@ -18,16 +18,16 @@ public class Main {
 
       settings.setCrossoverType(Crossover.SIMPLE);
       settings.setFitnessFunction(Fitness.DICE);
-      settings.setLowerW(1);
-      settings.setUpperW(21);
+      settings.setLowerW(3);
+      settings.setUpperW(3);
       settings.setLowerWn(3);
       settings.setUpperWn(3);
       settings.setLowerSigmaR(1);
-      settings.setUpperSigmaR(500);
-      settings.setLowerLambda(0);
-      settings.setUpperLambda(30);
-      settings.setMaxGenerations(25);
-      settings.setMaxIndividuals(20);
+      settings.setUpperSigmaR(20);
+      settings.setLowerLambda(1);
+      settings.setUpperLambda(2);
+      settings.setMaxGenerations(5);
+      settings.setMaxIndividuals(10);
       settings.setMutationPerc((float) 0.05);
       settings.setMutationType(Mutation.RANDOM_BIT);
       settings.setSegmentationTechnique(Segmentation.OTSU);
@@ -37,20 +37,20 @@ public class Main {
 
       String absdir = ""; // "/home/scalderon/DnlmPortable/";
 
-      Mat imagen1 = imageHandler.leerImagenGrises(absdir + "images/001.png");
-      Mat imagengd1 = imageHandler.leerImagenGrises(absdir + "images/001_gt.png");
+      Mat imagen1 = imageHandler.leerImagenGrises(absdir + "images/Recortadas/001.png");
+      Mat imagengd1 = imageHandler.leerImagenGrises(absdir + "images/GT/001.png");
 
       settings.addToOriginalImages(imagen1);
       settings.addToGroundtruthImages(imagengd1);
 
-      Mat imagen2 = imageHandler.leerImagenGrises(absdir + "images/002.png");
-      Mat imagengd2 = imageHandler.leerImagenGrises(absdir + "images/002_gt.png");
+      Mat imagen2 = imageHandler.leerImagenGrises(absdir + "images/Recortadas/255.png");
+      Mat imagengd2 = imageHandler.leerImagenGrises(absdir + "images/GT/255.png");
 
       settings.addToOriginalImages(imagen2);
       settings.addToGroundtruthImages(imagengd2);
 
-      Mat imagen3 = imageHandler.leerImagenGrises(absdir + "images/003.png");
-      Mat imagengd3 = imageHandler.leerImagenGrises(absdir + "images/003_gt.png");
+      Mat imagen3 = imageHandler.leerImagenGrises(absdir + "images/Recortadas/577.png");
+      Mat imagengd3 = imageHandler.leerImagenGrises(absdir + "images/GT/577.png");
 
       settings.addToOriginalImages(imagen3);
       settings.addToGroundtruthImages(imagengd3);
