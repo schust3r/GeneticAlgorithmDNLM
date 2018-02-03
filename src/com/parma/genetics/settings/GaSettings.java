@@ -24,6 +24,9 @@ public class GaSettings {
     private int lowerWn;
     private int upperWn;    
     
+    private float lowerLambda;
+    private float upperLambda;
+    
     private String title;
     
     private String description;
@@ -32,7 +35,7 @@ public class GaSettings {
     
     private int maxGenerations;
     
-    private double mutationPerc;
+    private float mutationPerc;
     
     private Mutation mutationType;
     
@@ -42,7 +45,7 @@ public class GaSettings {
     
     private Segmentation segmentationTechnique;
     
-    private double selectionThreshold;
+    private float selectionThreshold;
     
     // images to filter and check against the ground truth  
     private List<Mat> originalImages;
@@ -164,11 +167,11 @@ public class GaSettings {
         this.maxGenerations = maxGenerations;
     }
 
-    public double getMutationPerc() {
+    public float getMutationPerc() {
         return mutationPerc;
     }
 
-    public void setMutationPerc(double mutationPerc) {
+    public void setMutationPerc(float mutationPerc) {
         this.mutationPerc = mutationPerc;
     }
 
@@ -204,11 +207,27 @@ public class GaSettings {
         this.segmentationTechnique = segmentationTechnique;
     }
 
-    public double getSelectionThreshold() {
+    public float getSelectionThreshold() {
         return selectionThreshold;
     }
 
-    public void setSelectionThreshold(double selectionThreshold) {
+    public void setSelectionThreshold(float selectionThreshold) {
         this.selectionThreshold = selectionThreshold;
+    }
+
+    public float getLowerLambda() {
+      return lowerLambda;
+    }
+
+    public void setLowerLambda(float lowerLambda) {
+      this.lowerLambda = lowerLambda;
+    }
+
+    public float getUpperLambda() {
+      return upperLambda;
+    }
+
+    public void setUpperLambda(float upperLambda) {
+      this.upperLambda = upperLambda;
     }    
 }

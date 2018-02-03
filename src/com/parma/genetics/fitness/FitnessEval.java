@@ -18,11 +18,12 @@ public class FitnessEval {
     this.segTechnique = seg;
   }
 
-  public double evaluate(ParamIndividual p, Mat pOriginal, Mat pGroundtruth) {
+  public float evaluate(ParamIndividual p, Mat pOriginal, Mat pGroundtruth) {
 
     int w = p.getW();
     int w_n = p.getW_n();
     int sigma_r = p.getSigma_r();
+    float lambda = p.getLambda();
 
     w = (w % 2 == 0) ? w++ : w;
     w_n = (w % 2 == 0) ? w_n++ : w_n;
@@ -32,7 +33,7 @@ public class FitnessEval {
 
     // filter the image with DNLM-IDFT
     DnlmFilter filter = new DnlmFilter();
-    Mat filteredImage = filter.filter(original, w, w_n, sigma_r);
+    Mat filteredImage = filter.filter(original, w, w_n, sigma_r, lambda);
 
     // cut black borders and apply same transformation to groundtruth
     int snipping = w + w_n;
@@ -45,7 +46,7 @@ public class FitnessEval {
     filteredImage = applySegmentation(filteredImage);
 
     // calculate fitness with the specified similarity check function
-    double fitness = getFitnessResult(filteredImage, pGroundtruth);
+    float fitness = getFitnessResult(filteredImage, pGroundtruth);
 
     original.release();
     filteredImage.release();
@@ -70,10 +71,10 @@ public class FitnessEval {
   }
 
 
-  private double getFitnessResult(Mat image, Mat groundtruth) {
+  private float getFitnessResult(Mat image, Mat groundtruth) {
     switch (fitnessFunction) {
       case DICE:
-        return Dice.calculateDice(image, groundtruth);
+        return (float) Dice.calculateDice(image, groundtruth);
       /*
        * More methods to be added ...
        */

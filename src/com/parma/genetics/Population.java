@@ -17,6 +17,9 @@ public class Population {
 
   private final GaSettings settings;
 
+  public Population() {
+    this.settings = new GaSettings();
+  }
   public Population(GaSettings settings) {
     this.population = new ArrayList<ParamIndividual>();
     this.safebox = new ArrayList<ParamIndividual>();
@@ -24,9 +27,7 @@ public class Population {
   }
 
   public void initializePopulation(int maxInd) {
-	  
     for (int i = 0; i < maxInd; i++) {
-	    
       ParamIndividual p = new ParamIndividual();
 
       p.setW(getRandomIntegerBetween(settings.getLowerW(), settings.getUpperW()));
@@ -34,11 +35,14 @@ public class Population {
       p.setW_n(getRandomIntegerBetween(settings.getLowerWn(), settings.getUpperWn()));
 
       p.setSigma_r(getRandomIntegerBetween(settings.getLowerSigmaR(), settings.getUpperSigmaR()));
+      
+     p.setLambda(getRandomFloatBetween(settings.getLowerLambda(), settings.getUpperLambda()));
 
       population.add(p);
     }
-	  
+
   }
+  
   
   public void sortByFitness() {
     Collections.sort(population);
@@ -62,6 +66,10 @@ public class Population {
 
   private int getRandomIntegerBetween(int lower, int upper) {
     return random.nextInt(upper - lower + 1) + lower;
+  }
+  
+  public float getRandomFloatBetween(float lower, float upper) {
+    return lower+(upper-lower)*random.nextFloat();
   }
 
   public void update(List<ParamIndividual> offspring) {

@@ -25,7 +25,7 @@ public class Mutator {
 
     if (type == Mutation.RANDOM_BIT) {
       int bitPlace = random.nextInt(2);
-      int param = random.nextInt(3);
+      int param = random.nextInt();
       if (param == 0) {
         int newW = p.getW() ^ (1 << bitPlace);
         p.setW(newW);
@@ -33,6 +33,15 @@ public class Mutator {
       if (param == 1) {
         int newW_n = p.getW_n() ^ (1 << bitPlace);
         p.setW_n(newW_n);
+      }
+      if(param == 2){
+        float lambda=p.getLambda();
+        if (bitPlace == 0) {
+          lambda+=0.5;
+        } else {
+          lambda-=0.5;
+        }
+        p.setLambda(lambda);
       } else {
         int newSigma_r = p.getSigma_r() ^ (1 << bitPlace);
         p.setSigma_r(newSigma_r);

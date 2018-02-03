@@ -13,7 +13,7 @@ public class FilterResultTest {
 
     ImageHandler ih = new ImageHandler();
 
-    String filename = "002";
+    String filename = "003";
     int w = 5;
     int w_n = 5;
     int sigma_r = 310;
@@ -23,22 +23,26 @@ public class FilterResultTest {
 
     // apply filter
     DnlmFilter filter = new DnlmFilter();
-    Mat res = filter.filter(imagen, w, w_n, sigma_r);
+   
+    Mat res = filter.filter(imagen, w, w_n, sigma_r, 3);
 
     // cut unwanted borders
     int snip = w + w_n;
     res = res.submat(snip, res.rows() - snip - 2, snip, res.cols() - snip - 2);
     groundtruth = groundtruth.submat(snip, groundtruth.rows() - snip - 2, snip,
         groundtruth.cols() - snip - 2);
+    
+    ih.guardarImagen("C:\\Users\\Eliot\\Documents\\GitHub\\GeneticAlgorithmDNLM\\images\\", filename + "_out_nootsu", "png", res);
 
     // apply binarization + Otsu thresholding
     Thresholder.applyOtsuThreshold(res);
     Thresholder.applyThreshold(groundtruth, 1);  
+    
 
     // calculate dice similarity index
     double dice = Dice.calculateDice(res, groundtruth);
 
-    ih.guardarImagen("images/", filename + "_out", "png", res);
+    ih.guardarImagen("C:\\Users\\Eliot\\Documents\\GitHub\\GeneticAlgorithmDNLM\\images\\", filename + "_out", "png", res);
     
     System.out.println(dice);
 

@@ -13,7 +13,7 @@ import org.opencv.imgproc.Imgproc;
 
 public class DnlmFilter {
 
-  public Mat filter(Mat I, double w, double w_n, double sigma_r) {
+  public Mat filter(Mat I, double w, double w_n, double sigma_r, double lambda) {
 
     Mat G = new Mat(I.size(), CvType.CV_64FC1);
     I.copyTo(G);
@@ -42,7 +42,7 @@ public class DnlmFilter {
     S.copyTo(GaussW);
     Core.exp(GaussW, GaussW);
 
-    Mat U = NoAdaptativeUSM(G, 3, 17, 0.005);
+    Mat U = NoAdaptativeUSM(G, lambda, 17, 0.005);
 
     IntStream iterations = IntStream.range(0, size_x);
 

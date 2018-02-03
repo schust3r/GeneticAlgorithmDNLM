@@ -19,14 +19,15 @@ public class Main {
       settings.setCrossoverType(Crossover.SIMPLE);
       settings.setFitnessFunction(Fitness.DICE);
       settings.setLowerW(1);
-      settings.setUpperW(9);
+      settings.setUpperW(21);
       settings.setLowerWn(3);
-      settings.setUpperWn(7);
+      settings.setUpperWn(3);
       settings.setLowerSigmaR(1);
       settings.setUpperSigmaR(500);
-
+      settings.setLowerLambda(0);
+      settings.setUpperLambda(30);
       settings.setMaxGenerations(25);
-      settings.setMaxIndividuals(100);
+      settings.setMaxIndividuals(20);
       settings.setMutationPerc((float) 0.05);
       settings.setMutationType(Mutation.RANDOM_BIT);
       settings.setSegmentationTechnique(Segmentation.OTSU);

@@ -18,7 +18,7 @@ public class GaCalibration {
 
   private GaSettings settings;
 
-  private Hashtable<String, Double> params;
+  private Hashtable<String, Float> params;
 
   private final Random random = new Random();
 
@@ -26,10 +26,10 @@ public class GaCalibration {
     this.settings = settings;
     this.population = new Population(settings);
     this.population.initializePopulation(settings.getMaxIndividuals());
-    this.safeboxSize = Math.max(1, (int) ((double) settings.getMaxIndividuals() * 0.2));
+    this.safeboxSize = Math.max(1, (int) ((float) settings.getMaxIndividuals() * 0.2));
     this.safebox = new TreeSet<ParamIndividual>();
-    this.settings.setSelectionThreshold(0.6);
-    this.params = new Hashtable<String, Double>();
+    this.settings.setSelectionThreshold((float) 0.6);
+    this.params = new Hashtable<String, Float>();
     header();
   }
 
@@ -84,8 +84,8 @@ public class GaCalibration {
   }
 
 
-  private double getAverageFitness() {
-    double averageFitness = 0;
+  private float getAverageFitness() {
+    float averageFitness = 0;
     for (int ind = 0; ind < settings.getMaxIndividuals(); ind++) {
       averageFitness += population.getIndividual(ind).getFitness();
     }
@@ -103,12 +103,12 @@ public class GaCalibration {
           new FitnessEval(settings.getFitnessFunction(), settings.getSegmentationTechnique());
 
       String key = p.toString();
-      Double value = params.get(key);
-      double score = 0;
+      Float value = params.get(key);
+      float score = 0;
 
-      if (value != null) {
+      if ( value != null) {
         // if the value is in the table, don't calculate it again
-        score = value.doubleValue();
+        score = value;
 
       } else {
         // calculate fitness score for every (image, ground_truth) pair provided
@@ -117,7 +117,7 @@ public class GaCalibration {
               settings.getGroundtruthImage(index));
         }
         // calculate the mean score for the samples
-        score = score / (double) settings.getSampleCount();
+        score = score / (float) settings.getSampleCount();
 
         // save it to the params set
         params.put(key, score);
@@ -133,19 +133,19 @@ public class GaCalibration {
 
 
   private void normalizePopulationFitness() {
-    double accumulatedFitness = getAccumulatedFitness();
+    float accumulatedFitness = getAccumulatedFitness();
     for (int ind = 0; ind < settings.getMaxIndividuals(); ind++) {
       ParamIndividual p = population.getIndividual(ind);
-      double normFitness = p.getFitness() / accumulatedFitness;
+      float normFitness = (float) (p.getFitness() / accumulatedFitness);
       p.setFitness(normFitness);
     }
   }
 
 
   private List<ParamIndividual> getSelectionIndividuals() {
-    double individualAccumulatedFitness = 1;
+    float individualAccumulatedFitness = 1;
     List<ParamIndividual> selectedIndividuals = new ArrayList<ParamIndividual>();
-    double threshold = settings.getSelectionThreshold();
+    float threshold = settings.getSelectionThreshold();
 
     for (int index = 0; individualAccumulatedFitness >= threshold
         && index < population.getSize(); index++) {
@@ -161,19 +161,19 @@ public class GaCalibration {
 
   private void applyMutation() {
     Mutator mutator = new Mutator(settings.getMutationType());
-    double mutationFactor = random.nextDouble();
+    float mutationFactor = random.nextFloat();
     for (int index = 0; index < settings.getMaxIndividuals(); index++) {
       if (mutationFactor <= settings.getMutationPerc()) {
         ParamIndividual p = population.getIndividual(index);
         mutator.mutate(p);
       }
-      mutationFactor = random.nextDouble();
+      mutationFactor = random.nextFloat();
     }
   }
 
 
-  private double getAccumulatedFitness() {
-    double accumulatedFitness = 0;
+  private float getAccumulatedFitness() {
+    float accumulatedFitness = 0;
     for (int ind = 0; ind < settings.getMaxIndividuals(); ind++) {
       ParamIndividual p = population.getIndividual(ind);
       accumulatedFitness += p.getFitness();
@@ -187,7 +187,7 @@ public class GaCalibration {
     System.out.println("generation,average_fitness,best_fitness,best_w,best_w_n,best_s_r");
   }
 
-  public void log(int gen, double avgf, double bestf, int bestw, int bestwn, int bestsr) {
+  public void log(int gen, float avgf, float bestf, int bestw, int bestwn, int bestsr) {
     System.out.println(gen + "," + avgf + "," + bestf + "," + bestw + "," + bestwn + "," + bestsr);
   }
 

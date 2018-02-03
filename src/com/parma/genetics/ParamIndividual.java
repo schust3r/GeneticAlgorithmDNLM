@@ -11,7 +11,8 @@ public class ParamIndividual implements Comparable<ParamIndividual> {
   private int w;
   private int w_n;
   private int sigma_r;
-  private double fitness;
+  private float fitness;
+  private float lambda;
 
   public ParamIndividual() {
     this.setFitness(0);
@@ -41,11 +42,11 @@ public class ParamIndividual implements Comparable<ParamIndividual> {
     this.sigma_r = sigma_r;
   }
 
-  public double getFitness() {
+  public float getFitness() {
     return fitness;
   }
 
-  public void setFitness(double fitness) {
+  public void setFitness(float fitness) {
     this.fitness = fitness;
   }
 
@@ -61,8 +62,16 @@ public class ParamIndividual implements Comparable<ParamIndividual> {
 
   @Override
   public String toString() {
-    return String.valueOf(this.getW())+"," + String.valueOf(this.getW_n())+","
-        + String.valueOf(this.getSigma_r());
+    return String.valueOf(this.getW()) + "," + String.valueOf(this.getW_n()) + ","
+        + String.valueOf(this.getSigma_r()) + "," + String.valueOf(this.getLambda());
 
+  }
+
+  public float getLambda() {
+    return lambda;
+  }
+
+  public void setLambda(float lambda) {
+    this.lambda = lambda;
   }
 }
