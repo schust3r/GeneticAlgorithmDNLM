@@ -12,11 +12,31 @@ import com.parma.images.ImageHandler;
 public class Main {
 
   public static void main(String args[]) {
-
+    
+    Crossover crossover = Crossover.SIMPLE;
+    int mIndividuos = 10;
+    float mutPerc = 0.05f;
+    
+    if (args.length == 3) {
+      
+      switch (args[0]) {
+        case "c":
+          crossover = Crossover.CLUSTER;
+          break;
+        case "b":
+          crossover = Crossover.BITWISE;
+          break;
+        default:
+          break;
+      }
+      mIndividuos = Integer.parseInt(args[1]);
+      mutPerc = (float) Integer.parseInt(args[2]) / 100.0f;
+    }
+    
     try {
       GaSettings settings = new GaSettings();
 
-      settings.setCrossoverType(Crossover.SIMPLE);
+      settings.setCrossoverType(crossover);//ARG
       settings.setFitnessFunction(Fitness.DICE);
       settings.setLowerW(3);
       settings.setUpperW(3);
@@ -26,11 +46,11 @@ public class Main {
       settings.setUpperSigmaR(500);
       settings.setLowerLambda(1);
       settings.setUpperLambda(30);
-      settings.setMaxGenerations(25);
-      settings.setMaxIndividuals(10);
-      settings.setMutationPerc((float) 0.05);
+      settings.setMaxGenerations(25); 
+      settings.setMaxIndividuals(mIndividuos);//ARG
+      settings.setMutationPerc((float) mutPerc);//ARG
       settings.setMutationType(Mutation.RANDOM_BIT);
-      settings.setSegmentationTechnique(Segmentation.OTSU);
+      settings.setSegmentationTechnique(Segmentation.OTSU); 
       settings.setSelectionThreshold((float) 0.6);
 
       String absdir = "";
