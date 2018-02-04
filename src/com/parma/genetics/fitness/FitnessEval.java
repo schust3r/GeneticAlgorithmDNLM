@@ -35,6 +35,7 @@ public class FitnessEval {
     DnlmFilter filter = new DnlmFilter();
     Mat filteredImage = filter.filter(original, w, w_n, sigma_r, lambda);
 
+
     // cut black borders and apply same transformation to groundtruth
     int snipping = w + w_n;
     filteredImage = filteredImage.submat(snipping, filteredImage.rows() - snipping - 2, snipping,
@@ -48,8 +49,8 @@ public class FitnessEval {
     // calculate fitness with the specified similarity check function
     float fitness = getFitnessResult(filteredImage, pGroundtruth);
 
-    original.release();
-    filteredImage.release();
+    original = null;
+    filteredImage = null;
 
     return fitness;
   }

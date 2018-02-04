@@ -1,0 +1,2 @@
+generation,average_fitness,best_fitness,best_w,best_w_n,best_s_r,best_lambda
+Key: 3,7,22,27.24 | Score: 0.9618413;
