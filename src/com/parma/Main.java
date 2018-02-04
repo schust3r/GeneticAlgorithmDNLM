@@ -55,7 +55,7 @@ public class Main {
 
       String absdir = "";
       if (!System.getProperty("os.name").toLowerCase().contains("windows")) {
-        absdir = "/home/scalderon/DnlmPortable/GeneticAlgorithmDNLM/";
+        absdir = "/home/jdnlm/DnlmTests/GeneticAlgorithmDNLM/";
       }
 
       settings.setLocation(absdir);
