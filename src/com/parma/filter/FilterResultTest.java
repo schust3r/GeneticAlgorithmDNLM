@@ -24,7 +24,7 @@ public class FilterResultTest {
     // apply filter
     DnlmFilter filter = new DnlmFilter();
    
-    Mat res = filter.filter(imagen, w, w_n, sigma_r, 1.7);
+    Mat res = filter.filter(imagen, w, w_n, sigma_r, 1.6);
 
     // cut unwanted borders
     int snip = w + w_n;
