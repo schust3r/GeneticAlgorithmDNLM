@@ -1,3 +1,0 @@
-2018.02.04.13.51.38
-generation,average_fitness,best_fitness,best_w,best_w_n,best_s_r,best_lambda
-Key: 3,8,42,15.19 | Score: 0.93741226;
