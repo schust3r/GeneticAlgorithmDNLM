@@ -41,10 +41,10 @@ public class Main {
 
       settings.setCrossoverType(crossover);//ARG
       settings.setFitnessFunction(Fitness.DICE);
-      settings.setLowerW(3);
-      settings.setUpperW(3);
-      settings.setLowerWn(1);
-      settings.setUpperWn(21);
+      settings.setLowerW(1);
+      settings.setUpperW(21);
+      settings.setLowerWn(3);
+      settings.setUpperWn(3);
       settings.setLowerSigmaR(1);
       settings.setUpperSigmaR(500);
       settings.setLowerLambda(1);
