@@ -68,7 +68,7 @@ public class DnlmFilterTest {
   
       // calculate dice similarity index
       total += Dice.calculateDice(res, groundtruth);
-      System.out.println(total);
+      //System.out.println(total);
       i++;
     }
    // ih.guardarImagen("C:\\Users\\Eliot\\Documents\\GitHub\\GeneticAlgorithmDNLM\\images\\", filename + "_out", "png", res);
