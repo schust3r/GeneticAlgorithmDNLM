@@ -651,3 +651,5 @@ Key: 5,3,124,24.21 | Score: 0.9583525;
 Key: 5,3,132,24.1 | Score: 0.9584095;
 24,0.9584047,0.9584586,5,3,117,24.32
 2018.02.07.16.23.19
+2018.02.08.05.46.18
+generation,average_fitness,best_fitness,best_w,best_w_n,best_s_r,best_lambda
