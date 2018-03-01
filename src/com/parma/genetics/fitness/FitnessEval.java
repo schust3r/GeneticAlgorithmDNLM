@@ -6,7 +6,6 @@ import com.parma.genetics.ParamIndividual;
 import com.parma.genetics.scoring.Dice;
 import com.parma.genetics.settings.Fitness;
 import com.parma.genetics.settings.Segmentation;
-import com.parma.images.ImageHandler;
 import com.parma.segmentation.Thresholder;
 
 public class FitnessEval {
@@ -46,11 +45,7 @@ public class FitnessEval {
 
     // segmentation of the filtered image
     filteredImage = applySegmentation(filteredImage);
-    ImageHandler ih = new ImageHandler();
-    
-    ih.guardarImagen("C:\\Users\\Eliot\\Desktop\\crap",String.valueOf(w), "png", filteredImage);
-    ih.guardarImagen("C:\\Users\\Eliot\\Desktop\\crap",String.valueOf(w).concat("_gt"), "png", pGroundtruth);
-    
+
     // calculate fitness with the specified similarity check function
     float fitness = getFitnessResult(filteredImage, pGroundtruth);
 
