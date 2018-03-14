@@ -1,7 +1,6 @@
 package com.parma;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import org.opencv.core.Mat;
 import com.parma.genetics.GaCalibration;
 import com.parma.genetics.settings.Crossover;
@@ -14,8 +13,7 @@ import com.parma.images.ImageHandler;
 public class Main {
 
   public static void main(String args[]) {
-    String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-    System.out.println(timeStamp);
+   
     Crossover crossover = Crossover.SIMPLE;
     int mIndividuos = 10;
     float mutPerc = 0.05f;
@@ -95,8 +93,7 @@ public class Main {
 
       calibration.runCalibration();
       
-      String timeStamp2 = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-      System.out.println(timeStamp2);
+      
       
     } catch (Exception ex) {
       System.err.println(ex.getCause() + " - " + ex.getMessage() + " - " + ex.getStackTrace());

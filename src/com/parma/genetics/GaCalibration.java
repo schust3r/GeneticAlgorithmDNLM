@@ -1,5 +1,6 @@
 package com.parma.genetics;
 
+
 import java.util.Random;
 import java.util.TreeSet;
 import java.util.List;
@@ -8,7 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import com.parma.genetics.fitness.FitnessEval;
 import com.parma.genetics.settings.GaSettings;
@@ -83,7 +86,9 @@ public class GaCalibration {
     for (int gen = 0; gen < settings.getMaxGenerations(); gen++) {
 
       /* fitness function step */
-
+      String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+      System.out.println(timeStamp);
+      
       calculatePopulationFitness(gen);
       population.sortByFitness();
 
@@ -110,6 +115,9 @@ public class GaCalibration {
       applyMutation();
 
       storeParams();
+      
+      String timeStamp2 = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+      System.out.println(timeStamp2);
 
     }
 
